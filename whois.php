@@ -11,7 +11,12 @@
   <?php
      if($_GET['host']){
        $host_name = $_GET['host'];
-       echo '入力したホスト名は '.$host_name.' です。';
+       $result = dns_get_record($host_name);
+       if($result){
+         echo "<pre>";
+         print_r($result);
+         echo "</pre>";
+       }
     }
   ?>
   </body>
