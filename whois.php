@@ -1,9 +1,10 @@
 <!DOCTYPE html>
   <head>
-    <title>Whois GET</title>
+    <title>DNS Search</title>
+    <link ref="stylesheet" href="style.css" type="text/css">
   </head>
   <body>
-  <h1>Whois</h1>
+  <h1>DNS Search</h1>
   <form action="whois.php" method="get">
      ホスト名： <input type="text" name="host">
      <input type="submit" value="送信">
