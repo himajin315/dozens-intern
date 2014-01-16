@@ -5,7 +5,7 @@
   </head>
   <body>
   <h1>DNS Search</h1>
-  <form action="whois.php" method="get">
+  <form action="dns_search.php" method="get">
      ホスト名： <input type="text" name="host">
      <input type="submit" value="送信">
   </form>
