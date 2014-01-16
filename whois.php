@@ -12,13 +12,23 @@
   <?php
      if($_GET['host']){
        $host_name = $_GET['host'];
+       //DNSレコードを取得する
        $result = dns_get_record($host_name);
+       //結果を表示
        if($result){
          echo "<pre>";
          print_r($result);
          echo "</pre>";
+         foreach ($result as $array){
+           foreach ($array as $value){
+             echo '現在の配列要素の値は[ '.$value.' ]です。<br/>';
+           }
+           echo '<hr>';
+         }
+       }else{
+         echo '見つかりませんでした。';
        }
-    }
+     }
   ?>
   </body>
 </html>
