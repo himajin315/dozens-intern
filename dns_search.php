@@ -1,6 +1,7 @@
 <!DOCTYPE html>
   <head>
     <title>DNS Search</title>
+    <meta charset="UTF-8">
     <link ref="stylesheet" href="style.css" type="text/css">
   </head>
   <body>
@@ -20,8 +21,8 @@
          print_r($result);
          echo "</pre>";
          foreach ($result as $array){
-           foreach ($array as $value){
-             echo '現在の配列要素の値は[ '.$value.' ]です。<br/>';
+           foreach ($array as $key => $value){
+             echo 'key[ '.$key.' ], value[ '.$value.' ]です。<br/>';
            }
            echo '<hr>';
          }

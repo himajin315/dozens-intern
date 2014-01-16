@@ -1,6 +1,7 @@
 <!DOCTYPE html>
   <head>
     <title>DNS インターン記録</title>
+    <meta charset="UTF-8">
     <link ref="stylesheet" href="style.css" type="text/css">
   </head>
   <body>
