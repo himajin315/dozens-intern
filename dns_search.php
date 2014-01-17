@@ -61,7 +61,9 @@
            }
            if($record_info["type"]=="MX"){
              echo '<tr><td colspan=2 class="r-type">MX records - Mailservers</td></tr>';
-             echo '<tr><td>'.$record_info["pri"].' '.$record_info["target"] .'</td><td></td></tr>';
+             $mx_ip = '後で実装します';
+             if($host_to_ip[$record_info["target"]]) $mx_ip = $host_to_ip[$record_info["target"]];
+             echo '<tr><td>'.$record_info["pri"].' '.$record_info["target"] .'</td><td>'.$mx_ip.'</td></tr>';
            }
 
            //NSレコードは複数あるので、配列に格納する
