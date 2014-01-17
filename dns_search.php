@@ -32,37 +32,48 @@
        //結果を表示
        if($result){
          $ns_hosts = array();
+         $host_to_ip = array();
+
+         //追加情報で渡されたホスト名とIPを連想配列に格納する
+         foreach ($addtl as $add){
+           $host_to_ip += array($add["host"] => $add["ip"]);
+         }
+
          echo '<table>';
-         foreach ($result as $array){
-           if($array["type"]=="SOA"){
+         foreach ($result as $record_info){
+           //各レコードを表示させる
+           if($record_info["type"]=="SOA"){
              echo '<tr><td colspan=2 class="r-type">SOA records - Source Of Authority</td>';
-             echo '<tr><td>'.$array["host"].'. serial number </td><td>'.$array["serial"].'</td></tr>';
-             echo '<tr><td>'.$array["host"].'. MNAME </td><td>'.$array["mname"].'</td></tr>';
-             echo '<tr><td>'.$array["host"].'. RNAME </td><td>'.$array["rname"].'</td></tr>';
-             echo '<tr><td>'.$array["host"].'. REFRESH </td><td>'.$array["refresh"].'</td></tr>';
-             echo '<tr><td>'.$array["host"].'. RETRY </td><td>'.$array["retry"].'</td></tr>';
-             echo '<tr><td>'.$array["host"].'. TTL </td><td>'.$array["ttl"].'</td></tr>';
+             echo '<tr><td>'.$record_info["host"].'. serial number </td><td>'.$record_info["serial"].'</td></tr>';
+             echo '<tr><td>'.$record_info["host"].'. MNAME </td><td>'.$record_info["mname"].'</td></tr>';
+             echo '<tr><td>'.$record_info["host"].'. RNAME </td><td>'.$record_info["rname"].'</td></tr>';
+             echo '<tr><td>'.$record_info["host"].'. REFRESH </td><td>'.$record_info["refresh"].'</td></tr>';
+             echo '<tr><td>'.$record_info["host"].'. RETRY </td><td>'.$record_info["retry"].'</td></tr>';
+             echo '<tr><td>'.$record_info["host"].'. TTL </td><td>'.$record_info["ttl"].'</td></tr>';
            }
-           if($array["type"]=="TXT"){
+           if($record_info["type"]=="TXT"){
              echo '<tr><td colspan=2 class="r-type">TXT records</td>';
-             echo '<tr><td>'.$array["host"].'. TXT </td><td>'.$array["txt"].'</td></tr>';
+             echo '<tr><td>'.$record_info["host"].'. TXT </td><td>'.$record_info["txt"].'</td></tr>';
            }
-           if($array["type"]=="A"){
+           if($record_info["type"]=="A"){
              echo '<tr><td colspan=2 class="r-type">A records</td>';
-             echo '<tr><td>'.$array["host"].'. A </td><td>'.$array["ip"].'</td></tr>';
+             echo '<tr><td>'.$record_info["host"].'. A </td><td>'.$record_info["ip"].'</td></tr>';
            }
-           if($array["type"]=="MX"){
+           if($record_info["type"]=="MX"){
              echo '<tr><td colspan=2 class="r-type">MX records - Mailservers</td></tr>';
-             echo '<tr><td>'.$array["pri"].' '.$array["target"] .'</td><td></td></tr>';
+             echo '<tr><td>'.$record_info["pri"].' '.$record_info["target"] .'</td><td></td></tr>';
            }
-           if($array["type"]=="NS"){
-             $ns_hosts[] = $array["target"];
+
+           //NSレコードは複数あるので、配列に格納する
+           if($record_info["type"]=="NS"){
+             $ns_hosts[] = $record_info["target"];
            }
          }
+         //NSレコードがあるならば表示させる
          if($ns_hosts){
            echo '<tr><td colspan=2 class="r-type">NS records - Nameservers</td>';
            foreach ($ns_hosts as $ns_host){
-             echo '<tr><td>'.$ns_host.'</td><td></td></tr>';
+             echo '<tr><td>'.$ns_host.'</td><td>'.$host_to_ip[$ns_host].'</td></tr>';
            }
          }
          echo "</table>";
