@@ -1,0 +1,29 @@
+body {
+    margin: 0 auto;
+    width: 900px;
+    background-color: #fafafa;
+}
+.contents {
+    background-color: #fff;
+    margin-top: 20px;
+    padding: 20px;
+    min-height: 500px;
+}
+h1 {
+    border-bottom: 1px solid #ddd;
+}
+h3 {
+    text-align: right;
+}
+table {
+    margin:30px;
+    border-collapse: collapse;
+}
+td {
+    border: solid 1px;
+    padding: 0.5em;
+}
+.r-type{
+    text-align: center;
+    background-color: #ddd;
+}
