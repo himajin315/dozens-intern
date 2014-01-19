@@ -20,7 +20,7 @@
   </head>
   <body>
   <h1>DNS GET RECORD</h1>
-  <form action="dns_search.php" method="get">
+  <form action="dns_get_record.php" method="get">
      ホスト名： <input type="text" name="host">
      <input type="submit" value="送信">
   </form>
