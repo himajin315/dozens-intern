@@ -72,6 +72,7 @@
         }
     ?>
       <h3><a href="index.html">戻る</a></h2>
+    </div>
   </body>
 </html>
 
