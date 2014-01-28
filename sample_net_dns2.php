@@ -17,7 +17,7 @@
   }
   if(isset($host)){
     $ns = array('8.8.8.8', '8.8.4.4');
-    $type = "A";
+    $type = "SOA";
     require_once 'Net/DNS2.php';
     $rs = new Net_DNS2_Resolver(array('nameservers' => $ns));
   } else {
@@ -40,11 +40,15 @@
     echo "<tr><td>{$record->name}</td>";
     echo "<td>{$record->type}</td>";
     echo "<td>{$record->address}</td>";
-   echo "<td>{$record->ttl}</td></tr>\n";
+    echo "<td>{$record->ttl}</td></tr>\n";
   }
 
   echo "</table>\n";
 
+  // print output
+  print("<pre>");
+  print_r($result);
+  print("</pre>");
   ?>
       <h3><a href="index.html">戻る</a></h2>
     </div>
