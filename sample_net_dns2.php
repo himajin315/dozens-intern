@@ -28,7 +28,7 @@
 <!--     <option>EID</option>-->
 <!--     <option>EUI48</option>-->
 <!--     <option>EUI64</option>-->
-<!--     <option>HINFO</option>-->
+     <option>HINFO</option>
 <!--     <option>HIP</option>-->
 <!--     <option>IPSECKEY</option>-->
 <!--     <option>ISDN</option>-->
@@ -50,15 +50,16 @@
 <!--     <option>RRSIG</option>-->
 <!--     <option>RT</option>-->
 <!--     <option>SIG</option>-->
+     <option>SOA</option>
      <option>SPF</option>-->
 <!--     <option>SRV</option>-->
 <!--     <option>SSHFP</option>-->
 <!--     <option>TA</option>-->
 <!--     <option>TALINK</option>-->
 <!--     <option>TKEY</option>-->
-     <option>TXT</option>-->
+     <option>TXT</option>
 <!--     <option>URI</option>-->
-<!--     <option>WKS</option>-->
+     <option>WKS</option>
 <!--     <option>X25</option>-->
    </select>
      <input type="submit" value="送信">
