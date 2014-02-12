@@ -25,48 +25,12 @@
   }
 
   try {
-    $result_a = $rs->query($host, 'A');
-    $result_aaaa = $rs->query($host, 'AAAA');
     $result_any = $rs->query($host, 'ANY');
     $result_mx = $rs->query($host, 'MX');
     $result_ns = $rs->query($host, 'NS');
-    $result_soa = $rs->query($host, 'SOA');
-    $result_txt = $rs->query($host, 'TXT');
   } catch(InvalidArgumentException $e) {
     echo "Failed to query: " . $e->getMessage() . "\n";
   }
-
-  // print output
-  echo "<h2>A Ansesr</h2>";
-  print("<pre>");
-  print_r($result_a->answer);
-  print("</pre>");
-
-  echo "<h2>AAAA Ansesr</h2>";
-  print("<pre>");
-  print_r($result_aaaa->answer);
-  print("</pre>");
-
-  echo "<h2>ANY Ansesr</h2>";
-  print("<pre>");
-  print_r($result_any->answer);
-  print("</pre>");
-
-  echo "<h2>MX Ansesr</h2>";
-  print("<pre>");
-  print_r($result_mx->answer);
-  print("</pre>");
-
-  echo "<h2>NS Ansesr</h2>";
-  print("<pre>");
-  print_r($result_ns->answer);
-  print("</pre>");
-
-  echo "<h2>SOA Ansesr</h2>";
-  print("<pre>");
-  print_r($result_soa->answer);
-  print("</pre>");
-
 
   if($result_any->answer){
     echo '<table>';
@@ -107,7 +71,9 @@
     if($result_mx->answer){
       echo '<tr><td colspan=2 class="r-type">MX records - Mailservers</td></tr>';
       foreach ($result_mx->answer as $record_mx_info){
-	echo '<tr><td>'.$record_mx_info->exchange.'. MX </td><td>'.'IP address'.'</td></tr>';
+	$mx_host = $record_mx_info->exchange;
+	$result_a = $rs->query($mx_host, 'A');
+	echo '<tr><td>'.$record_mx_info->exchange.'. MX </td><td>'.$result_a->answer[0]->address.'</td></tr>';
       }
     }
     
@@ -115,7 +81,9 @@
     if($result_ns->answer){
       echo '<tr><td colspan=2 class="r-type">NS records - Nameservers</td>';
       foreach ($result_ns->answer as $record_ns_info){
-	echo '<tr><td>'.$record_ns_info->nsdname.'</td><td>'.'IP address'.'</td></tr>';
+	$ns_host = $record_ns_info->nsdname;
+	$result_ns = $rs->query($ns_host, 'A');
+	echo '<tr><td>'.$record_ns_info->nsdname.'</td><td>'.$result_ns->answer[0]->address.'</td></tr>';
       }
     }
     echo "</table>";
