@@ -67,7 +67,9 @@
   print_r($result_soa->answer);
   print("</pre>");
 
-  echo '<table>';
+
+  if($result_any->answer){
+    echo '<table>';
     //各レコードを表示させる
     foreach ($result_any->answer as $record_info){
       if($record_info->type == "SOA"){
@@ -81,46 +83,47 @@
       }
 
       if($record_info->type == "TXT"){
-      echo '<tr><td colspan=2 class="r-type">TXT records</td>';
- 	echo '<tr><td>'.$record_info->name.'. TXT </td><td>'.$record_info->txt.'</td></tr>';
+	echo '<tr><td colspan=2 class="r-type">TXT records</td>';
+	echo '<tr><td>'.$record_info->name.'. TXT </td><td>';
+	if($record_info->text){
+	  foreach ($record_info->text as $record_txt_info){
+	    echo $record_txt_info.'</td></tr>';
+	  }
+	}
       }
 
       if($record_info->type == "A"){
 	echo '<tr><td colspan=2 class="r-type">A records</td>';
 	echo '<tr><td>'.$record_info->name.'. A </td><td>'.$record_info->address.'</td></tr>';
       }
+      
+      if($record_info->type == "AAAA"){
+	echo '<tr><td colspan=2 class="r-type">AAAA records</td>';
+	echo '<tr><td>'.$record_info->name.'. AAAA </td><td>'.$record_info->address.'</td></tr>';
+      }
+      
     }
-      /*
-      if($record_info["type"]=="MX"){
-	echo '<tr><td colspan=2 class="r-type">MX records - Mailservers</td></tr>';
-	$mx_ip = '後で実装します';
-	if(isset($host_to_ip[$record_info["target"]])) $mx_ip = $host_to_ip[$record_info["target"]];
-	echo '<tr><td>'.$record_info["pri"].' '.$record_info["target"] .'</td><td>'.$mx_ip.'</td></tr>';
+    
+    if($result_mx->answer){
+      echo '<tr><td colspan=2 class="r-type">MX records - Mailservers</td></tr>';
+      foreach ($result_mx->answer as $record_mx_info){
+	echo '<tr><td>'.$record_mx_info->exchange.'. MX </td><td>'.'IP address'.'</td></tr>';
       }
-      //NSレコードは複数あるので、配列に格納する
-      if($record_info["type"]=="NS"){
-	$ns_hosts[] = $record_info["target"];
+    }
+    
+    //NSレコードがあるならば表示させる
+    if($result_ns->answer){
+      echo '<tr><td colspan=2 class="r-type">NS records - Nameservers</td>';
+      foreach ($result_ns->answer as $record_ns_info){
+	echo '<tr><td>'.$record_ns_info->nsdname.'</td><td>'.'IP address'.'</td></tr>';
       }
-      */
-  //NSレコードがあるならば表示させる
-  /*
-  if($ns_hosts){
-    echo '<tr><td colspan=2 class="r-type">NS records - Nameservers</td>';
-    foreach ($ns_hosts as $ns_host){
-      echo '<tr><td>'.$ns_host.'</td><td>'.$host_to_ip[$ns_host].'</td></tr>';
     }
     echo "</table>";
-  }
-  else{
+    }
+    
+    else{
     echo "見つかりませんでした。";
   }
-  */
-
-
-
-
-
-
 
   ?>
       <h3><a href="index.html">戻る</a></h2>
