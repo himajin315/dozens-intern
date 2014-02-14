@@ -81,7 +81,9 @@
 	}
 	try {
 	  $result_aaaa = $rs->query($mx_host, 'AAAA');
-	  echo '<tr><td>'.$record_mx_info->exchange.' AAAA </td><td>'.$result_aaaa->answer[0]->address.'</td></tr>';
+	  if(isset($result_aaaa->answer[0]->address)){
+	    echo '<tr><td>'.$record_mx_info->exchange.' AAAA </td><td>'.$result_aaaa->answer[0]->address.'</td></tr>';
+	  }
 	} catch(Exception $e) {
 	}
       }
@@ -96,7 +98,9 @@
 	echo '<tr><td>'.$record_ns_info->nsdname.'</td><td>'.$result_ns->answer[0]->address.'</td></tr>';
 	try {
 	  $result_aaaa = $rs->query($ns_host, 'AAAA');
-	  echo '<tr><td>'.$record_ns_info->nsdname.' AAAA </td><td>'.$result_aaaa->answer[0]->address.'</td></tr>';
+	  if(isset($result_aaaa->answer[0]->address)){
+            echo '<tr><td>'.$record_ns_info->nsdname.' AAAA </td><td>'.$result_aaaa->answer[0]->address.'</td></tr>';
+	  }
 	} catch(Exception $e) {
 	}
       }
