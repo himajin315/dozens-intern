@@ -77,7 +77,7 @@
 	  $result_a = $rs->query($mx_host, 'A');
 	  echo '<tr><td>'.$record_mx_info->exchange.'</td><td>'.$result_a->answer[0]->address.'</td></tr>';
 	} catch(Exception $e) {
-	  echo '<tr><td>'.$record_mx_info->exchange.'</td><td>NXDOMAIN</td></tr>';
+	  echo '<tr style="color:red;"><td>'.$record_mx_info->exchange.'</td><td>NXDOMAIN</td></tr>';
 	}
 	try {
 	  $result_aaaa = $rs->query($mx_host, 'AAAA');
