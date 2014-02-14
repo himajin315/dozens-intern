@@ -28,11 +28,12 @@
     $result_any = $rs->query($host, 'ANY');
     $result_mx = $rs->query($host, 'MX');
     $result_ns = $rs->query($host, 'NS');
-  } catch(InvalidArgumentException $e) {
-    echo "Failed to query: " . $e->getMessage() . "\n";
+  } catch(Exception $e) {
+    echo "見つかりませんでした。";
   }
 
-  if($result_any->answer){
+
+  if(isset($result_any->answer)){
     echo '<table>';
     //各レコードを表示させる
     foreach ($result_any->answer as $record_info){
@@ -71,9 +72,18 @@
     if($result_mx->answer){
       echo '<tr><td colspan=2 class="r-type">MX records - Mailservers</td></tr>';
       foreach ($result_mx->answer as $record_mx_info){
-	$mx_host = $record_mx_info->exchange;
-	$result_a = $rs->query($mx_host, 'A');
-	echo '<tr><td>'.$record_mx_info->exchange.'. MX </td><td>'.$result_a->answer[0]->address.'</td></tr>';
+	$mx_host = strtolower($record_mx_info->exchange);
+	try {
+	  $result_a = $rs->query($mx_host, 'A');
+	  echo '<tr><td>'.$record_mx_info->exchange.'</td><td>'.$result_a->answer[0]->address.'</td></tr>';
+	} catch(Exception $e) {
+	  echo '<tr><td>'.$record_mx_info->exchange.'</td><td>NXDOMAIN</td></tr>';
+	}
+	try {
+	  $result_aaaa = $rs->query($mx_host, 'AAAA');
+	  echo '<tr><td>'.$record_mx_info->exchange.' AAAA </td><td>'.$result_aaaa->answer[0]->address.'</td></tr>';
+	} catch(Exception $e) {
+	}
       }
     }
     
@@ -81,18 +91,13 @@
     if($result_ns->answer){
       echo '<tr><td colspan=2 class="r-type">NS records - Nameservers</td>';
       foreach ($result_ns->answer as $record_ns_info){
-	$ns_host = $record_ns_info->nsdname;
+	$ns_host = strtolower($record_ns_info->nsdname);
 	$result_ns = $rs->query($ns_host, 'A');
 	echo '<tr><td>'.$record_ns_info->nsdname.'</td><td>'.$result_ns->answer[0]->address.'</td></tr>';
       }
     }
     echo "</table>";
-    }
-    
-    else{
-    echo "見つかりませんでした。";
   }
-
   ?>
       <h3><a href="index.html">戻る</a></h2>
     </div>
